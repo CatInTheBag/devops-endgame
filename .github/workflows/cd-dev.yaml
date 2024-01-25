@@ -1,10 +1,10 @@
 ---
-name: Continuous Deployment
+name: CD
 
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Infrastructure"]
+    workflows: ["EC2"]
     types:
       - completed
 
