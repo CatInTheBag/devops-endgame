@@ -1,0 +1,10 @@
+---
+- name: Configure and Run GitHub Runner
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: Run the GitHub Runner
+      shell: "~/actions-runner/run.sh &"
+      async: 0
+      poll: 0

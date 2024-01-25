@@ -1,0 +1,68 @@
+---
+name: Continuous Integration
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches: [master, main]
+
+jobs:
+  testing:
+    name: run unit tests on Java 17
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+      - name: Setup Java 17 temurin
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: "17"
+      - name: Run Maven clean test jobs
+        run : mvn -f pom.xml clean test
+      #TODO: add messages for success or make it more informative
+      #TODO: use caching
+
+  linting:
+    needs: testing
+    name: Lint code base with checkstyle
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout source
+      uses: actions/checkout@v4
+    - name: Lint Code Base
+      uses: dbelyaev/action-checkstyle@master
+      with:
+        github_token: ${{ secrets.github_token }}
+        reporter: github-check
+        checkstyle_config: google_checks.xml
+        level: warning
+
+  secrets:
+    needs: testing
+    name: Checking for secrets using gitleaks
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Checkout source
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+
+    - name: gitleaks
+      uses: gitleaks/gitleaks-action@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  security:
+    needs: testing
+    name: Snyk scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/maven-3-jdk-17@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
