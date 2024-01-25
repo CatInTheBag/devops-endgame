@@ -8,8 +8,6 @@ variable "env_prefix" {
   description = "environment"
 }
 
-variable public_key {}
-
 variable "instance_type" {
   type = string
   description = "ami instance type"
@@ -29,4 +27,6 @@ variable "vpc_id" {}
 variable "webserver_subnet_id" {}
 
 variable "runner_token" {}
+variable public_key {}
 variable "private_key" {}
+
