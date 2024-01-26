@@ -3,4 +3,4 @@ package com.example.myappdevopsfinalproject.model;
 /**
  * Student Dto.
  */
-public record StudentRecord(String name, String email, String projectName) {}
+public record StudentRecord(String name, String email, String projectName, String phoneNumber) {}

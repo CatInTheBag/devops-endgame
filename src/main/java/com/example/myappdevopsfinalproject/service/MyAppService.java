@@ -12,6 +12,6 @@ public final class MyAppService {
 
   public List<StudentRecord> getData() {
     return List.of(new StudentRecord("Vasil", "vasil.bachvarov.u23@learn.telerikacademy.com",
-        "Devops Spring Boot project"));
+        "Devops Spring Boot project", "1234"));
   }
 }
