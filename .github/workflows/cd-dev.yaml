@@ -4,15 +4,17 @@ name: CD
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["EC2"]
-    types:
-      - completed
+    workflows: [ "EC2" ]
+    types: [ completed ]
+    branches: [ master ]
 
 jobs:
-  building:
-    name: build
+  on-success:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
+      - run: echo 'The triggering workflow passed'
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -44,13 +46,15 @@ jobs:
           only-fixed: true
 
   deploying:
-    needs: building
+    needs: on-success
     name: deploy on aws-ec2 instance
     runs-on: [self-hosted]
     steps:
       - name: Pull image from docker hub
         run: docker pull vassilb/myapp:latest
+
       - name: Delete previous instance
         run: docker rm -f devops-final-project
+
       - name: Deploy latest image
         run: docker run -d -p 8080:8080 --name devops-final-project vassilb/myapp:latest
