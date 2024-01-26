@@ -9,7 +9,7 @@ on:
       - closed
 
 jobs:
-  if_merged:
+  terraform-initialisation:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
 
