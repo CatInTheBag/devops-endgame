@@ -8,6 +8,9 @@ on:
     types:
       - closed
 
+concurrency:
+  group: ec2-concurrency
+
 jobs:
   terraform-initialisation:
     if: github.event.pull_request.merged == true
