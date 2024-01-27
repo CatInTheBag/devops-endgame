@@ -1,6 +1,7 @@
 package com.example.myappdevopsfinalproject.controller;
 
 import com.example.myappdevopsfinalproject.feignclient.model.RandomPasswordOutputRecord;
+import com.example.myappdevopsfinalproject.feignclient.model.SecFilingOutputRecord;
 import com.example.myappdevopsfinalproject.model.StudentRecord;
 import com.example.myappdevopsfinalproject.service.MyAppService;
 import java.util.List;
@@ -31,7 +32,14 @@ public class MyAppController {
   }
 
   @GetMapping("/generate-password/{size}")
-  public ResponseEntity<RandomPasswordOutputRecord> generatePassword(@PathVariable( name = "size") int size){
+  public ResponseEntity<RandomPasswordOutputRecord> generatePassword(
+      @PathVariable(name = "size") int size) {
     return ResponseEntity.ok(myAppService.generatePassword(size));
+  }
+
+  @GetMapping("/search-company/{ticker}/{filing}")
+  public ResponseEntity<List<SecFilingOutputRecord>> searchCompany(
+      @PathVariable(name = "ticker") String ticker, @PathVariable(name = "filing") String filing) {
+    return ResponseEntity.ok(myAppService.searchCompany(ticker, filing));
   }
 }
