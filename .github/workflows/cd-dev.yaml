@@ -9,7 +9,7 @@ on:
     branches: [ master ]
 
 jobs:
-  Deploying:
+  publishing-on-dockerhub:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
@@ -45,8 +45,8 @@ jobs:
           ignore-unchanged: true
           only-fixed: true
 
-  deploying:
-    needs: on-success
+  deploying-on-ec2:
+    needs: publishing-on-dockerhub
     name: deploy on aws-ec2 instance
     runs-on: [self-hosted]
     steps:
