@@ -35,7 +35,6 @@ jobs:
             -H "Authorization: Bearer ${PERSONAL_ACCESS_TOKEN}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
             https://api.github.com/repos/CatInTheBag/devops-endgame/actions/runners/registration-token | jq -r .token)
-          echo "Registration Token: $TOKEN"
           echo "::set-output name=runner_token::$TOKEN"
 
       - name: Setup hashicorp
@@ -47,6 +46,7 @@ jobs:
         run: |
           echo "::add-mask::$PRIVATE_IP"
           echo "::add-mask::$PUBLIC_KEY"
+          echo "::add-mask::$TOKEN"
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -60,7 +60,7 @@ jobs:
         working-directory: ./terraform
 
       - name: 💻 Apply terraform
-        run: terraform apply --auto-approve -var="my_ip=${PRIVATE_IP}" -var="public_key=${PUBLIC_KEY}" -var="runner_token=${{ steps.fetch_github_token.outputs.runner_token }}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var-file=terraform-dev.tfvars
+        run: terraform apply --auto-approve -var="my_ip=${PRIVATE_IP}" -var="public_key=${PUBLIC_KEY}" -var="runner_token=${$TOKEN}" -var="private_key=${{ secrets.SSH_PRIVATE_KEY }}" -var-file=terraform-dev.tfvars
         working-directory: ./terraform
 
 
