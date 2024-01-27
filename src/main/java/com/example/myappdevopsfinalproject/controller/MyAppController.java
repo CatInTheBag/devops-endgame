@@ -25,6 +25,7 @@ public class MyAppController {
 
   @GetMapping("/get-students")
   public ResponseEntity<List<StudentRecord>> getData() {
+    System.out.println("test");
     return ResponseEntity.ok(myAppService.getData());
   }
 }
