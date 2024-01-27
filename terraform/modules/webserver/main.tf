@@ -58,7 +58,9 @@ resource "aws_instance" "myapp-ec2" {
   }
 
   provisioner "file" {
-    source      = ".\\ansible\\initial-configuration.yaml"
+    #for testing on windows
+    #source      = ".\\ansible\\initial-configuration.yaml"
+    source      = "./ansible/initial-configuration.yaml"
     destination = "/tmp/initial-configuration.yaml"
   }
 
