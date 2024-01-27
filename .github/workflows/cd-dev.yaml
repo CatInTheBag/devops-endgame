@@ -12,9 +12,9 @@ jobs:
   publishing-on-dockerhub:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    env:
+      API_KEY: ${{ secrets.API_KEY }}
     steps:
-      - run: echo 'The triggering workflow passed'
-
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
@@ -57,4 +57,4 @@ jobs:
         run: docker rm -f devops-final-project
 
       - name: Deploy latest image
-        run: docker run -d -p 8080:8080 --name devops-final-project vassilb/myapp:latest
+        run: docker run -d -e API_KEY=${API_KEY} -p 8080:8080 --name devops-final-project vassilb/myapp:latest
