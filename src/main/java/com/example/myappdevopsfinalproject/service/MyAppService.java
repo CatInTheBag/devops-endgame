@@ -24,7 +24,7 @@ public final class MyAppService {
 
   public List<StudentRecord> getInfo() {
     return List.of(new StudentRecord("Vasil", "vasil.bachvarov.u23@learn.telerikacademy.com",
-        "Devops Spring Boot project", "1234"));
+        "Devops Spring Boot project", "12345"));
   }
 
   public RandomPasswordOutputRecord generatePassword(int size) {
