@@ -8,20 +8,20 @@ on:
 
 jobs:
   testing:
-    name: run unit tests on Java 17
+    name: Testing with mvn
     runs-on: ubuntu-latest
     steps:
       - name: Checkout source
         uses: actions/checkout@v4
+
       - name: Setup Java 17 temurin
         uses: actions/setup-java@v4
         with:
           distribution: "temurin"
           java-version: "17"
+
       - name: Run Maven clean test jobs
         run : mvn -f pom.xml clean test
-      #TODO: add messages for success or make it more informative
-      #TODO: use caching
 
   linting:
     needs: testing
@@ -30,6 +30,7 @@ jobs:
     steps:
     - name: Checkout source
       uses: actions/checkout@v4
+
     - name: Lint Code Base
       uses: dbelyaev/action-checkstyle@master
       with:
@@ -40,7 +41,7 @@ jobs:
 
   secrets:
     needs: testing
-    name: Secrets check with gitleaks
+    name: Scanning with gitleaks
     runs-on: ubuntu-latest
     steps:
 

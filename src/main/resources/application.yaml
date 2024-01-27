@@ -1,2 +1,6 @@
 server:
   port: 8080
+
+api:
+  #key: here
+  key: ${API_KEY}
