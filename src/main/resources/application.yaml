@@ -2,5 +2,5 @@ server:
   port: 8080
 
 api:
-  #key: add here for local testing
+  #key: add here for local testing, better save it locally
   key: ${API_KEY:1234}
