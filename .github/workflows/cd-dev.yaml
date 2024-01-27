@@ -6,7 +6,7 @@ on:
   workflow_run:
     workflows: [ "EC2" ]
     types: [ completed ]
-    branches: [ master ]
+    branches: [ master, main ]
 
 jobs:
   publishing-on-dockerhub:
