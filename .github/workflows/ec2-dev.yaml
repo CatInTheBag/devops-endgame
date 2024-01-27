@@ -23,9 +23,6 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
-      - name: 🔎 Check IP
-        run: curl https://api.ipify.org
-
       - name: Fetch GitHub Token
         id: fetch_github_token
         run: |
