@@ -4,9 +4,12 @@ name: CD
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [ "EC2" ]
+    workflows: [ EC2 ]
     types: [ completed ]
     branches: [ master, main ]
+
+concurrency:
+  group: cd-concurrency
 
 jobs:
   publishing-on-dockerhub:
