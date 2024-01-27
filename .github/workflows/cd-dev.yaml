@@ -4,9 +4,9 @@ name: CD
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: [ EC2 ]
-    types: [ completed ]
-    branches: [ master, main ]
+    workflows: [ "EC2" ]
+    types:
+      - completed
 
 concurrency:
   group: cd-concurrency
