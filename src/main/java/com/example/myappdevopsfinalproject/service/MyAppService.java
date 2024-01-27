@@ -1,10 +1,10 @@
 package com.example.myappdevopsfinalproject.service;
 
-import com.example.myappdevopsfinalproject.feignclient.PasswordGeneratorClient;
+import com.example.myappdevopsfinalproject.feignclient.ApiNinjasClient;
 import com.example.myappdevopsfinalproject.feignclient.model.RandomPasswordOutputRecord;
+import com.example.myappdevopsfinalproject.feignclient.model.SecFilingOutputRecord;
 import com.example.myappdevopsfinalproject.model.StudentRecord;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public final class MyAppService {
   @Value("${api.key}")
   private String apiKey;
   @Autowired
-  private PasswordGeneratorClient passwordGeneratorClient;
+  private ApiNinjasClient apiNinjasClient;
 
   public List<StudentRecord> getInfo() {
     return List.of(new StudentRecord("Vasil", "vasil.bachvarov.u23@learn.telerikacademy.com",
@@ -28,6 +28,10 @@ public final class MyAppService {
   }
 
   public RandomPasswordOutputRecord generatePassword(int size) {
-    return passwordGeneratorClient.getPassword(size, apiKey);
+    return apiNinjasClient.getPassword(size, apiKey);
+  }
+
+  public List<SecFilingOutputRecord> searchCompany(String ticker, String filing){
+    return apiNinjasClient.searchCompany(ticker, filing, apiKey);
   }
 }
