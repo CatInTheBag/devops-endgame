@@ -8,6 +8,7 @@ The DevOps project is a Spring Boot application that automates the CI/CD pipelin
 
   1. Continuous Integration (CI): The CI stage is triggered when a PR is made to the master branch. GitHub Actions runs the Java tests with Maven, performs linting, security checks, and credentials check. If all tests pass, the PR can be merged.
 
+
   1. Infrastructure Provisioning: After the PR is merged, the infrastructure provisioning stage is triggered. Terraform is used to provision the EC2 instance on AWS. The process involves fetching the GitHub token for custom runner creation on AWS, setting up Terraform, configuring AWS credentials, initializing Terraform, applying Terraform configuration for the creation of EC2, and providing a remote exec provisioner that updates the EC2 instance, installs Ansible, Docker, and starts the custom runner on the EC2.
 
   1. Continuous Deployment (CD): After the successful EC2 part, the CD stage is triggered. The Docker image is published on Docker Hub, and then it is pulled and run on the already created EC2 instance using the custom created runner on this instance. The Ansible playbook is executed to configure the EC2 instance and deploy the application.
@@ -45,4 +46,4 @@ The DevOps project is a Spring Boot application that automates the CI/CD pipelin
   6.	After the PR is merged, the infrastructure provisioning stage will be triggered automatically.
   7.	After the successful EC2 part, the CD stage will be triggered automatically.
 
-
+![thanos__final_rest_by_danielabdu_dcgt4y5-pre](https://github.com/CatInTheBag/devops-endgame/assets/4971877/766853db-a22b-4594-a564-07ba37291697)
