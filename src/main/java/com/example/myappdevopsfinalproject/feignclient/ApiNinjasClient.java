@@ -19,6 +19,7 @@ public interface ApiNinjasClient {
 
   @GetMapping("/sec")
   @Headers({"Accept: application/json", "X-Api-Key:{apiKey}"})
-  List<SecFilingOutputRecord> searchCompany(@RequestParam("ticker") String ticker, @RequestParam("filing") String filing,
+  List<SecFilingOutputRecord> searchCompany(@RequestParam("ticker") String ticker,
+      @RequestParam("filing") String filing,
       @RequestHeader("X-Api-Key") String apiKey);
 }
