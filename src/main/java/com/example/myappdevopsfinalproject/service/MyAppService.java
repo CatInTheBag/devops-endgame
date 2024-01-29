@@ -1,12 +1,15 @@
 package com.example.myappdevopsfinalproject.service;
 
+import com.example.myappdevopsfinalproject.exception.ResourceNotFoundException;
 import com.example.myappdevopsfinalproject.feignclient.ApiNinjasClient;
 import com.example.myappdevopsfinalproject.feignclient.model.RandomPasswordOutputRecord;
 import com.example.myappdevopsfinalproject.feignclient.model.SecFilingOutputRecord;
 import com.example.myappdevopsfinalproject.model.StudentRecord;
+import feign.FeignException;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.beans.factory.annotation.Value;
 
@@ -28,10 +31,15 @@ public final class MyAppService {
   }
 
   public RandomPasswordOutputRecord generatePassword(int size) {
-    return apiNinjasClient.getPassword(size, apiKey);
+
+    try {
+      return apiNinjasClient.getPassword(size, apiKey);
+    } catch (FeignException e) {
+      throw new ResourceNotFoundException(e.contentUTF8());
+    }
   }
 
-  public List<SecFilingOutputRecord> searchCompany(String ticker, String filing){
+  public List<SecFilingOutputRecord> searchCompany(String ticker, String filing) {
     return apiNinjasClient.searchCompany(ticker, filing, apiKey);
   }
 }
