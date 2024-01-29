@@ -22,8 +22,8 @@ public final class MyAppService {
 
   @Value("${api.key}")
   private String apiKey;
-  @Autowired
-  private ApiNinjasClient apiNinjasClient;
+  private final ApiNinjasClient apiNinjasClient;
+  private final SECService secService;
 
   public List<StudentRecord> getInfo() {
     return List.of(new StudentRecord("Vasil", "vasil.bachvarov.u23@learn.telerikacademy.com",
@@ -40,6 +40,10 @@ public final class MyAppService {
   }
 
   public List<SecFilingOutputRecord> searchCompany(String ticker, String filing) {
+    if (!secService.isValidFiling(filing)) {
+      throw new ResourceNotFoundException("Invalid filing file");
+    }
+
     return apiNinjasClient.searchCompany(ticker, filing, apiKey);
   }
 }
