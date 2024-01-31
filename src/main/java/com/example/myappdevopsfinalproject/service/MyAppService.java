@@ -31,6 +31,11 @@ public final class MyAppService {
   }
 
   public RandomPasswordOutputRecord generatePassword(int size) {
+    if (size <= 0) {
+      return RandomPasswordOutputRecord.builder()
+          .random_password("")
+          .build();
+    }
 
     try {
       return apiNinjasClient.getPassword(size, apiKey);
